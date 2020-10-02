@@ -1,12 +1,15 @@
 <template>
     <div>
         cloud music
+        <a-button>antd测试</a-button>
     </div>
 </template>
 
 <script>
   export default {
-    name: 'home'
+    name: 'home',
+    components: {
+    }
   }
 </script>
 
