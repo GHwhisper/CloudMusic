@@ -43,7 +43,7 @@ let rendererConfig = {
         }
       },
       {
-        test: /\.stylus$/,
+        test: /\.(stylus|styl)(\?.*)?$/,
         use: ['vue-style-loader', 'css-loader', 'stylus-loader']
       },
       {
@@ -142,7 +142,9 @@ let rendererConfig = {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js',
-      'components': path.join(__dirname, '../src/renderer/components')
+      'components': path.join(__dirname, '../src/renderer/components'),
+      'common': path.join(__dirname, '../src/renderer/common'),
+      'api': path.join(__dirname, '../src/renderer/api')
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },

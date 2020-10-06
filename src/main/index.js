@@ -20,9 +20,11 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    width: 1020,
+    height: 700,
+    minWidth: 1020,
+    minHeight: 700,
     useContentSize: true,
-    width: 1000,
     frame: false // 删除标题栏和工具栏
   })
 
@@ -30,6 +32,13 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  mainWindow.on('maximize', function () {
+    mainWindow.webContents.send('main-window-max')
+  })
+  mainWindow.on('unmaximize', function () {
+    mainWindow.webContents.send('main-window-unmax')
   })
 }
 
@@ -45,6 +54,24 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+let ipcMain = require('electron').ipcMain
+// 接收最小化命令
+ipcMain.on('window-min', function() {
+  mainWindow.minimize()
+})
+// 接收最大化命令
+ipcMain.on('window-max', function() {
+  if (mainWindow.isMaximized()) {
+    mainWindow.restore()
+  } else {
+    mainWindow.maximize()
+  }
+})
+// 接收关闭窗口命令
+ipcMain.on('window-close', function () {
+  mainWindow.close()
 })
 
 /**
