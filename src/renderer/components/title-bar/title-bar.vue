@@ -22,6 +22,14 @@
         isMaximized: false // 窗口最大化
       }
     },
+    created () {
+      ipcRenderer.on('main-window-unmax', () => {
+        this.isMaximized = false
+      })
+      ipcRenderer.on('main-window-max', () => {
+        this.isMaximized = true
+      })
+    },
     methods: {
       minimizeWin () { // 最小化
         ipcRenderer.send('window-min')
@@ -42,14 +50,6 @@
           }
         })
       }
-    },
-    created () {
-      ipcRenderer.on('main-window-unmax', () => {
-        this.isMaximized = false
-      })
-      ipcRenderer.on('main-window-max', () => {
-        this.isMaximized = true
-      })
     }
   }
 </script>

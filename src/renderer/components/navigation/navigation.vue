@@ -26,10 +26,10 @@
             </a-sub-menu>
             <a-sub-menu key="myCollection">
                 <span slot="title"><span>收藏的歌单</span></span>
-                <a-menu-item key="10">我喜欢的音乐</a-menu-item>
-                <a-menu-item key="11">我喜欢的音乐</a-menu-item>
-                <a-menu-item key="12">我喜欢的音乐</a-menu-item>
-                <a-menu-item key="13">我喜欢的音乐</a-menu-item>
+                <a-menu-item key="10">收藏1</a-menu-item>
+                <a-menu-item key="11">收藏2</a-menu-item>
+                <a-menu-item key="12">收藏3</a-menu-item>
+                <a-menu-item key="13">收藏4</a-menu-item>
             </a-sub-menu>
         </a-menu>
     </div>

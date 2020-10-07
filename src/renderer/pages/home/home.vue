@@ -2,7 +2,7 @@
     <div class="home">
         <a-tabs default-active-key="1" class="a-tabs">
             <a-tab-pane key="1" tab="个性推荐">
-                <personalized></personalized>
+                <personalized :banners="banners"></personalized>
             </a-tab-pane>
             <a-tab-pane key="2" tab="歌单">
                 歌单
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import { getDiscovery } from 'api/discovery'
+  import { getBanner, getDiscovery } from 'api/discovery'
   import { SUCCESS } from 'api/config'
   import Personalized from './components/personalized'
 
@@ -35,18 +35,23 @@
     },
     data () {
       return {
-
+        banners: []
       }
     },
-    methods: {
-
-    },
     created () {
+      getBanner().then(res => {
+        if (res.status === SUCCESS && res.data.code === SUCCESS) {
+          this.banners = res.data.banners
+        }
+      })
       getDiscovery().then(res => {
-        if (res.status === SUCCESS) {
+        if (res.status === SUCCESS && res.data.code === SUCCESS) {
           console.log(res.data)
         }
       })
+    },
+    methods: {
+
     }
   }
 </script>
