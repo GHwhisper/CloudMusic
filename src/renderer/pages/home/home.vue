@@ -3,6 +3,7 @@
         <a-tabs default-active-key="1" class="a-tabs">
             <a-tab-pane key="1" tab="个性推荐">
                 <personalized :banners="banners"></personalized>
+                <song-list :list="songListRCMD"></song-list>
             </a-tab-pane>
             <a-tab-pane key="2" tab="歌单">
                 歌单
@@ -24,18 +25,21 @@
 </template>
 
 <script>
-  import { getBanner, getDiscovery } from 'api/discovery'
+  import { getBanner, getSongListRCMD } from 'api/discovery'
   import { SUCCESS } from 'api/config'
   import Personalized from './components/personalized'
+  import SongList from './components/recommend-song-list'
 
   export default {
     name: 'home',
     components: {
-      Personalized
+      Personalized,
+      SongList
     },
     data () {
       return {
-        banners: []
+        banners: [],
+        songListRCMD: []
       }
     },
     created () {
@@ -44,9 +48,10 @@
           this.banners = res.data.banners
         }
       })
-      getDiscovery().then(res => {
+      getSongListRCMD().then(res => {
         if (res.status === SUCCESS && res.data.code === SUCCESS) {
           console.log(res.data)
+          this.songListRCMD = res.data.result
         }
       })
     },

@@ -10,8 +10,8 @@
                 </div>
             </div>
         </div>
-        <a-icon v-if="arrow" class="arrow arrow-left" type="left" @click="prev" />
-        <a-icon v-if="arrow" class="arrow arrow-right" type="right" @click="next" />
+        <i v-if="arrow" class="iconfont icon-arrow-left arrow arrow-left" @click="prev"></i>
+        <i v-if="arrow" class="iconfont icon-arrow-right arrow arrow-right" @click="next"></i>
         <div v-if="dots" class="dots">
             <span class="dot" v-for="(item, index) in list" :key="index"
                   :class="{active: currentIndex === index}"
@@ -166,17 +166,17 @@
                         filter brightness(50%)
         .arrow
             position absolute
-            font-size $font-size-large
+            font-size 40px
             z-index 30
             top 50%
             color $color-gray-dark
             cursor pointer
             visibility hidden
             &.arrow-left
-                left 10px
+                left 0
                 transform translateY(-50%)
             &.arrow-right
-                right 10px
+                right 0
                 transform translateY(-50%)
         &:hover
             .arrow

@@ -5,7 +5,9 @@ export function getBanner () {
   return http(url)
 }
 
-export function getDiscovery () {
-  const url = '/homepage/block/page'
-  return http(url)
+export function getSongListRCMD () {
+  const url = '/personalized'
+  return http(url, {
+    limit: 9
+  })
 }

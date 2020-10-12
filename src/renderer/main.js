@@ -7,6 +7,7 @@ import Antd from 'ant-design-vue/es'
 import 'ant-design-vue/dist/antd.css'
 import 'common/styles/base.styl'
 import qs from 'qs'
+import 'common/styles/icon.styl'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

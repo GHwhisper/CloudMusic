@@ -4,3 +4,9 @@ drag()
 
 no-drag()
   -webkit-app-region no-drag
+
+line-clamp($lines=2)
+  display -webkit-box
+  -webkit-box-orient vertical
+  -webkit-line-clamp $lines
+  overflow hidden

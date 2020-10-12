@@ -1,10 +1,13 @@
 <template>
     <div class="title-bar">
-        <div class="title"><router-link to="/">网易云音乐</router-link></div>
+        <div class="title">
+            <i class="iconfont icon-wangyiyunyinle logo"></i>
+            <router-link to="/">网易云音乐</router-link>
+        </div>
         <div class="options">
-            <span @click="minimizeWin"><a-icon class="a-icon" type="minus" /></span>
-            <span @click="maximizeWin"><a-icon class="a-icon" :type="!isMaximized ? 'border' : 'switcher'" /></span>
-            <span @click="closeWin"><a-icon class="a-icon" type="close" /></span>
+            <span @click="minimizeWin"><i class="iconfont icon-zuixiaohua icon"></i></span>
+            <span @click="maximizeWin"><i :class="['iconfont', !isMaximized ? 'icon-chuangkouhua' : 'icon-huanyuan', 'icon']"></i></span>
+            <span @click="closeWin"><i class="iconfont icon-guanbi icon"></i></span>
         </div>
     </div>
 </template>
@@ -68,9 +71,16 @@
             cursor pointer
             margin-left 20px
             font-size $font-size-large
+            color $color-white
             no-drag()
-            & a
+            .logo
+                font-size 26px
+                position relative
+                top 3px
+            a
                 color $color-white
+                line-height 1
+                margin-left 2px
         .options
             float right
             margin-right 15px
@@ -85,6 +95,6 @@
                 color $color-gray-light
                 font-size $font-size-medium
                 &:hover
-                    .a-icon
+                    .icon
                         color $color-white
 </style>
