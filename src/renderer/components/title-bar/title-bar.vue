@@ -60,14 +60,15 @@
 <style lang="stylus" scoped>
     @import '~common/styles/variable'
     @import '~common/styles/mixins'
+
     .title-bar
         width 100%
         background-color $color-background
-        height 50px
+        height $height-title-bar
         drag()
         .title
             float left
-            line-height 50px
+            line-height $height-title-bar
             cursor pointer
             margin-left 20px
             font-size $font-size-large
@@ -87,9 +88,9 @@
             span
                 no-drag()
                 padding 0 5px
-                line-height 50px
+                line-height $height-title-bar
                 display inline-block
-                height 50px
+                height $height-title-bar
                 float left
                 cursor pointer
                 color $color-gray-light

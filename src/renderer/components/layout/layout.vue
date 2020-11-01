@@ -19,13 +19,14 @@
 </script>
 
 <style lang="stylus" scoped>
+    @import "~common/styles/variable"
     .container
         display flex
         position absolute
-        top 50px
+        top $height-title-bar
         left 0
         right 0
-        bottom 55px
+        bottom $height-bottom-player
         .right
             flex 1
 </style>

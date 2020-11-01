@@ -10,7 +10,7 @@
 
 <style lang="stylus" scoped>
     .player
-        height 55px
+        height 80px
         background-color lightslategray
         position fixed
         bottom 0

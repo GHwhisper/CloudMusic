@@ -74,7 +74,22 @@
     .a-tabs >>> .ant-tabs-tab
         padding-left 0
         padding-right 0
+        padding-top 20px
         font-size $font-size-medium-l
+        color $color-black-light
+        &:hover
+            color $color-black
+    .a-tabs >>> .ant-tabs-tab-active
+        font-size $font-size-large
+        font-weight $font-weight-bold
+        color $color-black
+    .a-tabs >>> .ant-tabs-bar
+        border 0
+        margin-bottom 24px
+    .a-tabs >>> .ant-tabs-ink-bar
+        height 3px
+        background-color $color-background
+        bottom 4px
 
     .home
         padding 0 30px
