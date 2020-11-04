@@ -139,7 +139,7 @@
                 transform scale(0.95) translate3d(-50%, 0, 0)
                 visibility hidden
                 cursor pointer
-                border-radius 10px
+                border-radius $border-radius-slider
                 overflow hidden
                 z-index 1
                 img
