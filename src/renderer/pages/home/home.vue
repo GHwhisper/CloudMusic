@@ -29,12 +29,14 @@
   import { SUCCESS } from 'api/config'
   import Personalized from './components/personalized'
   import SongList from './components/recommend-song-list'
+  import Tip from 'components/tip/tip'
 
   export default {
     name: 'home',
     components: {
       Personalized,
-      SongList
+      SongList,
+      Tip
     },
     data () {
       return {

@@ -20,7 +20,11 @@
     @import "~common/styles/variable"
 
     .process-bar
-        width 400px
+        width 100%
         height 3px
-        background-color yellowgreen
+        background $color-gray-light
+        border-radius 1.5px
+        &:hover
+            height 6px
+            border-radius 3px
 </style>
