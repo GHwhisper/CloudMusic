@@ -1,6 +1,9 @@
 <template>
-    <div class="process-bar">
-
+    <div class="progress-bar">
+        <div class="bar-inner">
+            <div class="progress"></div>
+            <div class="progress-btn"></div>
+        </div>
     </div>
 </template>
 
@@ -19,12 +22,37 @@
 <style lang="stylus" scoped>
     @import "~common/styles/variable"
 
-    .process-bar
+    .progress-bar
         width 100%
-        height 3px
-        background $color-gray-light
-        border-radius 1.5px
+        height 10px
+        position relative
+        cursor pointer
+        .bar-inner
+            width 100%
+            height 4px
+            background $color-border
+            border-radius 2px
+            position absolute
+            top 50%
+            transform translateY(-50%)
+            .progress
+                position absolute
+                height 100%
+                background-color $color-background
+            .progress-btn
+                width 10px
+                height @width
+                border-radius 50%
+                background-color $color-background
+                position absolute
+                left 0
+                top 50%
+                transform translateY(-50%)
+                opacity 0
         &:hover
-            height 6px
-            border-radius 3px
+            .bar-inner
+                height 6px
+                border-radius 3px
+            .progress-btn
+                opacity 1
 </style>

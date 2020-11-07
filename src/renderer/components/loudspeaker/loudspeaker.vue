@@ -28,10 +28,11 @@
             line-height 1
             cursor pointer
         .progress-bar
-            position relative
-            top -1px
             width 60px
             &:hover
-                height 3px
-                border-radius 1.5px
+                & >>> .bar-inner
+                    height 4px
+                & >>> .progress-btn
+                    width 8px
+                    height @width
 </style>

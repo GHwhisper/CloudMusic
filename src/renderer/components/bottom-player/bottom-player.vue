@@ -221,8 +221,6 @@
                         flex-shrink 0
                         color $color-play-time
                     .progress-bar
-                        position relative
-                        bottom 2px
                         margin 0 2px
         .right
             width 280px
