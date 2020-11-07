@@ -8,11 +8,11 @@
   export default {
     name: 'tip',
     props: {
-      name: {
+      name: { // 多个不同用途的tip同时存在时，显示哪一个
         type: String,
         required: true
       },
-      text: {
+      text: { // 内容
         type: String,
         required: true
       },
@@ -29,15 +29,25 @@
     },
     mounted () {
       this.bus.$on('showTip', (name) => {
+        if (this.show && this.timeout) { // 解决连续触发时，tip会先执行完上一次动画，再执行本次动画，造成tip闪烁的问题
+          clearTimeout(this.timeout)
+          this._hideTip()
+          return
+        }
         this.currentName = name
         this.show = true
         if (!this.timeout) {
-          this.timeout = setTimeout(() => {
-            this.show = false
-            this.timeout = null
-          }, this.duration)
+          this._hideTip()
         }
       })
+    },
+    methods: {
+      _hideTip () {
+        this.timeout = setTimeout(() => {
+          this.show = false
+          this.timeout = null
+        }, this.duration)
+      }
     },
     destroyed () {
       clearTimeout(this.timeout)

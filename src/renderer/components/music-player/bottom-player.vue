@@ -3,6 +3,9 @@
         <div class="left">
             <div class="img-con">
                 <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
+                <div class="spread" @click="togglePlayer">
+                    <i class="iconfont" :class="screenIcon"></i>
+                </div>
             </div>
             <div class="info">
                 <div class="name"><span>房间</span><like class="like"></like></div>
@@ -34,6 +37,7 @@
             <loudspeaker></loudspeaker>
             <div><i class="iconfont icon-caidan"></i></div>
         </div>
+        <normal-player></normal-player>
     </div>
 </template>
 
@@ -44,6 +48,7 @@
   import { playMode } from 'common/js/config'
   import Loudspeaker from 'components/loudspeaker/loudspeaker'
   import Tip from 'components/tip/tip'
+  import NormalPlayer from 'components/music-player/normal-player'
 
   export default {
     name: 'bottom-player',
@@ -51,7 +56,8 @@
       Like,
       ProgressBar,
       Loudspeaker,
-      Tip
+      Tip,
+      NormalPlayer
     },
     props: {
 
@@ -69,9 +75,13 @@
       togglePlaying () {
         this.setPlayingState(!this.playing)
       },
+      togglePlayer() {
+        this.setNormalPlayerVisibility(!this.normalPlayerVisibility)
+      },
       ...mapMutations({
         setPlayMode: 'SET_PLAY_MODE',
-        setPlayingState: 'SET_PLAYING_STATE'
+        setPlayingState: 'SET_PLAYING_STATE',
+        setNormalPlayerVisibility: 'SET_NORMAL_PLAYER_VISIBILITY'
       })
     },
     computed: {
@@ -102,9 +112,13 @@
       playIcon () {
         return this.playing ? 'icon-zanting' : 'icon-bofang'
       },
+      screenIcon () {
+        return this.normalPlayerVisibility ? 'icon-shousuo' : 'icon-kuozhan'
+      },
       ...mapGetters([
         'mode',
-        'playing'
+        'playing',
+        'normalPlayerVisibility'
       ])
     },
     watch: {
@@ -144,9 +158,30 @@
                 overflow hidden
                 margin-right 10px
                 flex-shrink 0
+                position relative
                 img
                     width 100%
                     height 100%
+                .spread
+                    width 100%
+                    height 100%
+                    position absolute
+                    top 0
+                    left 0
+                    cursor pointer
+                    text-align center
+                    background-color $color-black-trans
+                    opacity 0
+                    z-index 10
+                    i
+                        font-size 34px
+                        color $color-white
+                        line-height 54px
+                &:hover
+                    img
+                        filter blur(2px)
+                    .spread
+                        opacity 1
             .info
                 display flex
                 flex-direction column
@@ -203,6 +238,9 @@
                             background-color $color-play-btn-hover-bg
                     div.mode
                         position relative
+                        i
+                            font-size $font-size-medium
+                            font-weight bold
                         .tip
                             width 120px
                             text-align center

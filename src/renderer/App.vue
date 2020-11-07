@@ -19,7 +19,7 @@
   import TitleBar from 'components/title-bar/title-bar'
   import Layout from 'components/layout/layout'
   import Navigation from 'components/navigation/navigation'
-  import BottomPlayer from 'components/bottom-player/bottom-player'
+  import BottomPlayer from 'components/music-player/bottom-player'
 
   export default {
     name: 'cloud_music',
