@@ -7,6 +7,12 @@
                         <div class="cd">
                             <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
                         </div>
+                        <div class="operators">
+                            <div class="item-wrapper"><like class="icon"></like></div>
+                            <div class="item-wrapper"><collect class="icon"></collect></div>
+                            <div class="item-wrapper"><download class="icon"></download></div>
+                            <div class="item-wrapper"><share class="icon"></share></div>
+                        </div>
                     </div>
                     <div class="lyric-wrapper">
 
@@ -22,13 +28,23 @@
 
 <script>
   import { mapGetters, mapMutations } from 'vuex'
-  import singlecover from 'images/singlecover.png'
+  // import singlecover from 'images/singlecover.png'
+  import Like from 'components/like/like'
+  import Collect from 'components/collect/collect'
+  import Download from 'components/download/download'
+  import Share from 'components/share/share'
 
   export default {
     name: 'normal-player',
+    components: {
+      Like,
+      Collect,
+      Download,
+      Share
+    },
     data () {
       return {
-        singlecover
+        // singlecover
       }
     },
     methods: {
@@ -99,4 +115,24 @@
                             border-radius 50%
                             position relative
                             top -3px
+                    .operators
+                        display flex
+                        justify-content space-between
+                        position relative
+                        top 40px
+                        padding 0 20px
+                        .item-wrapper
+                            width 44px
+                            height @width
+                            border-radius 50%
+                            background-color $color-bottom-player-bg
+                            text-align center
+                            line-height @width
+                            cursor pointer
+                            &:hover
+                                background-color $color-play-btn-hover-bg
+                            .icon
+                                color $color-black-light
+                                position relative
+                                top 1px
 </style>

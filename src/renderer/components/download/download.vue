@@ -1,10 +1,10 @@
 <template>
-    <i class="iconfont icon-xihuan-kongpt" :style="{fontSize: size}" title="喜欢"></i>
+    <i class="iconfont icon-xiazaipt" :style="{fontSize: size}" title="下载"></i>
 </template>
 
 <script>
   export default {
-    name: 'like',
+    name: 'download',
     props: {
       size: {
         type: String,

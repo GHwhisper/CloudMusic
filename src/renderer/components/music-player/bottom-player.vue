@@ -197,6 +197,8 @@
                         single-line()
                         &:hover
                             color $color-black
+                    .like:hover
+                        color $color-black-light
                 .singer
                     font-size $font-size-small
                     cursor pointer
