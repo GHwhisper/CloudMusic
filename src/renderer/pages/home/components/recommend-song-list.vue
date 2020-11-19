@@ -4,7 +4,11 @@
         <div class="list">
             <song-list-cover daily name="每日歌单推荐"></song-list-cover>
             <div class="list-item" v-for="item in list" :key="item.id">
-                <song-list-cover :imgUrl="item.picUrl" :name="item.name" :count="item.playCount"></song-list-cover>
+                <song-list-cover :imgUrl="item.picUrl"
+                                 :name="item.name"
+                                 :count="item.playCount"
+                                 @click.native="toSongList(item.id)"
+                ></song-list-cover>
             </div>
         </div>
     </div>
@@ -25,6 +29,16 @@
         default () {
           return []
         }
+      }
+    },
+    methods: {
+      toSongList (listId) {
+        this.$router.push({
+          name: 'SongList',
+          params: {
+            id: listId
+          }
+        })
       }
     }
   }

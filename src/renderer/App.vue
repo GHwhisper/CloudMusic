@@ -6,7 +6,9 @@
                 <navigation></navigation>
             </template>
             <template #right>
-                <router-view></router-view>
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
             </template>
             <template #bottom>
                 <bottom-player></bottom-player>

@@ -15,11 +15,19 @@
                         </div>
                     </div>
                     <div class="lyric-wrapper">
-
+                        <div class="title">
+                            <h1 class="name">歌曲名</h1>
+                            <ul class="info">
+                                <li class="item"><span>专辑：</span><router-link to="">心音</router-link></li>
+                                <li class="item"><span>歌手：</span><router-link to="">上北健</router-link></li>
+                                <li class="item"><span>来源：</span><router-link to="">我喜欢的音乐</router-link></li>
+                            </ul>
+                        </div>
+                        <div class="lyric"></div>
                     </div>
                 </div>
-                <div>
-
+                <div class="close-normal" @click="closeNormalPlayer">
+                    <i class="iconfont icon-shousuo1"></i>
                 </div>
             </div>
         </div>
@@ -48,17 +56,8 @@
       }
     },
     methods: {
-      enter (el, done) {
-        console.log(1)
-      },
-      afterEnter () {
-        console.log(2)
-      },
-      leave (el, done) {
-        console.log(3)
-      },
-      afterLeave () {
-        console.log(4)
+      closeNormalPlayer () {
+        this.setNormalPlayerVisibility(false)
       },
       ...mapMutations({
         setNormalPlayerVisibility: 'SET_NORMAL_PLAYER_VISIBILITY'
@@ -74,6 +73,7 @@
 
 <style lang="stylus" scoped>
     @import "~common/styles/variable"
+    @import "~common/styles/mixins"
 
     .normal-player
         width 100%
@@ -84,10 +84,11 @@
         overflow hidden
         z-index 900
         overflow-y auto
+        transform scale(1)
+        transform-origin left bottom
         &.normal-enter, &.normal-leave-to
             opacity 0
-            /*width 0*/
-            /*top 1000px*/
+            transform scale(0)
         &.normal-enter-active, &.normal-leave-active
             transition all .5s
         .content
@@ -95,13 +96,15 @@
             height 100%
             background-color lightblue
             margin 0 auto
+            position relative
             .music-info
                 height 500px
+                display flex
                 .cd-wrapper
                     width 350px
                     height 100%
-                    background-color lightcoral
                     padding-top 50px
+                    flex none
                     .cd
                         width 350px
                         height @width
@@ -135,4 +138,46 @@
                                 color $color-black-light
                                 position relative
                                 top 1px
+                .lyric-wrapper
+                    flex 1
+                    background-color yellowgreen
+                    padding 30px 30px 0 130px
+                    display flex
+                    flex-direction column
+                    .title
+                        flex none
+                        .name
+                            font-size $font-size-song-name
+                            color $color-black-light
+                            line-height 1
+                            margin 0
+                            single-line()
+                        .info
+                            list-style-type none
+                            margin 0
+                            padding 0
+                            display flex
+                            margin-top 18px
+                            .item
+                                flex 1 0 0
+                                overflow hidden
+                                single-line()
+                                font-size $font-size-small-s
+                                &:not(:last-child)
+                                    padding-right 10px
+                    .lyric
+                        flex 1
+                        width 100%
+                        background-color lightcoral
+            .close-normal
+                position absolute
+                top 20px
+                left 100%
+                cursor pointer
+                border 1px solid $color-border
+                padding 0 10px
+                border-radius 5px
+                i
+                    font-size 20px
+                    line-height inherit
 </style>
