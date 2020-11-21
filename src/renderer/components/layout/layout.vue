@@ -29,4 +29,5 @@
         bottom $height-bottom-player
         .right
             flex 1
+            overflow-x hidden
 </style>

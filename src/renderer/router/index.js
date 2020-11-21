@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/home/home'
-import PrivateFM from '@/pages/private-fm/private-fm'
-import SongList from '@/pages/song-list/song-list'
+const Home = () => import(/* webpackChunkName: 'home' */ '@/pages/home/home')
+const PrivateFM = () => import(/* webpackChunkName: 'private-fm' */ '@/pages/private-fm/private-fm')
+const SongList = () => import(/* webpackChunkName: 'song-list' */ '@/pages/song-list/song-list')
 
 Vue.use(Router)
 
