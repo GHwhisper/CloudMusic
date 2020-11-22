@@ -14,7 +14,13 @@
                 <span class="create-date">2020-10-21创建</span>
             </div>
             <div class="operators">
-
+                <a-radio-group>
+                    <a-radio-button value="播放全部"><i class="iconfont icon-bofang pre-icon"></i>播放全部</a-radio-button>
+                    <a-radio-button value="添加全部到播放列表"><i class="iconfont icon-jia"></i></a-radio-button>
+                </a-radio-group>
+                <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon"></i>收藏(5649)</a-button>
+                <a-button type="round"><i class="iconfont icon-fenxiang pre-icon"></i>分享(5649)</a-button>
+                <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon"></i>下载全部</a-button>
             </div>
             <div class="info">
 
@@ -46,6 +52,42 @@
 <style lang="stylus" scoped>
     @import "~common/styles/variable"
     @import "~common/styles/mixins"
+
+    // 修改a-radio-group、a-radio-button组件样式
+    .ant-radio-group
+        font-size $font-size-medium
+        &:hover .ant-radio-button-wrapper
+            filter brightness(80%)
+        .ant-radio-button-wrapper
+            background-color $color-background
+            color $color-white
+            height 36px
+            line-height @height
+            &:first-child
+                border-radius 100px 0 0 100px
+                border none
+                border-right 1px solid $color-border
+            &:last-child
+                border-radius 0 100px 100px 0
+                border none
+        .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)
+            border-color $color-border
+            box-shadow none
+            color $color-white
+            &:hover
+                color $color-white
+                box-shadow none
+            &:focus-within
+                outline none
+    // 修改a-button组件样式
+    .ant-btn-round
+        height 36px
+        font-size $font-size-medium
+        margin-left 5px
+        &:hover
+        &:focus
+            color $color-black-light
+            border-color #d9d9d9
 
     .head
         padding 32px
@@ -86,4 +128,8 @@
                     font-size $font-size-small-s
                 & > *:not(:first-child)
                     margin-left 10px
+            .operators
+                .pre-icon
+                    font-size inherit
+                    margin-right 5px
 </style>
