@@ -1,5 +1,5 @@
 <template>
-    <span :style="avatarStyleObj">
+    <span :style="avatarStyleObj" :class="!src ? 'border' : ''">
         <img v-if="src" :src="src" :alt="alt">
         <i v-else class="iconfont icon-yonghu"></i>
     </span>
@@ -46,8 +46,12 @@
         background-color $color-white
         overflow hidden
         position relative
-        border 1px solid $color-border
         cursor pointer
+        &.border
+            border 1px solid $color-border
+        img
+            width 100%
+            height 100%
         i
             position absolute
             top 50%

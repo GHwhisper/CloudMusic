@@ -1,86 +1,113 @@
 <template>
-    <div class="head">
-        <div class="cover">
-            <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
+    <div>
+        <div class="head">
+            <div class="cover">
+                <img :src="songlist.cover" alt="">
+            </div>
+            <div class="detail">
+                <h1>
+                    <i class="iconfont icon-gedan"></i>
+                    <span class="name">{{songlist.name}}</span>
+                </h1>
+                <div class="author" v-if="songlist.creator">
+                    <avatar :src="songlist.creator.avatar"></avatar>
+                    <router-link to="" class="author-name">{{songlist.creator.nickname}}</router-link>
+                    <span class="create-date">{{songlist.createTime}}创建</span>
+                </div>
+                <div class="operators">
+                    <a-radio-group>
+                        <a-radio-button value="播放全部"><i class="iconfont icon-bofang pre-icon"></i>播放全部</a-radio-button>
+                        <a-radio-button value="添加全部到播放列表"><i class="iconfont icon-jia"></i></a-radio-button>
+                    </a-radio-group>
+                    <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon round-btn-icon"></i>收藏({{songlist.subscribedCount}})</a-button>
+                    <a-button type="round"><i class="iconfont icon-fenxiang pre-icon round-btn-icon"></i>分享({{songlist.shareCount}})</a-button>
+                    <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon round-btn-icon"></i>下载全部</a-button>
+                </div>
+                <div class="info">
+                    <div class="row-item label">
+                        <span class="title">标签：</span>
+                        <span>
+                            <router-link to="">散步</router-link>/
+                            <router-link to="">浪漫</router-link>/
+                            <router-link to="">放松</router-link>
+                        </span>
+                    </div>
+                    <div class="row-item played">
+                        <span class="title">歌曲：</span>{{songlist.trackCount}}
+                        <span class="title">播放：</span>{{songlist.playCount}}
+                    </div>
+                    <div class="row-item intro" :class="folding ? 'fold' : ''">
+                        <span class="title">简介：</span>
+                        <a-icon class="icon-toggle" :type="folding ? 'caret-up' : 'caret-down'" @click="toggleFoldIntro" />
+                        <p class="intro-content" v-html="songlist.description"></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="detail">
-            <h1>
-                <i class="iconfont icon-gedan"></i>
-                <span class="name">歌单名</span>
-            </h1>
-            <div class="author">
-                <avatar></avatar>
-                <router-link to="" class="author-name">作者</router-link>
-                <span class="create-date">2020-10-21创建</span>
-            </div>
-            <div class="operators">
-                <a-radio-group>
-                    <a-radio-button value="播放全部"><i class="iconfont icon-bofang pre-icon"></i>播放全部</a-radio-button>
-                    <a-radio-button value="添加全部到播放列表"><i class="iconfont icon-jia"></i></a-radio-button>
-                </a-radio-group>
-                <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon round-btn-icon"></i>收藏(5649)</a-button>
-                <a-button type="round"><i class="iconfont icon-fenxiang pre-icon round-btn-icon"></i>分享(5649)</a-button>
-                <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon round-btn-icon"></i>下载全部</a-button>
-            </div>
-            <div class="info">
-                <div class="row-item label">
-                    <span class="title">标签：</span>
-                    <span>
-                        <router-link to="">散步</router-link>/
-                        <router-link to="">浪漫</router-link>/
-                        <router-link to="">放松</router-link>
-                    </span>
-                </div>
-                <div class="row-item played">
-                    <span class="title">歌曲：</span>32
-                    <span class="title">播放：</span>111万
-                </div>
-                <div class="row-item intro" :class="folding ? 'fold' : ''">
-                    <span class="title">简介：</span>
-                    <a-icon class="icon-toggle" :type="folding ? 'caret-up' : 'caret-down'" @click="toggleFoldIntro" />
-                    <p class="intro-content" v-html="content"></p>
-                </div>
-            </div>
-        </div>
+        <a-tabs default-active-key="1">
+            <a-tab-pane key="1" tab="歌曲列表">
+                <list-table></list-table>
+            </a-tab-pane>
+            <a-tab-pane key="2" tab="评论">
+
+            </a-tab-pane>
+            <a-tab-pane key="3" tab="收藏者">
+
+            </a-tab-pane>
+        </a-tabs>
     </div>
+
 </template>
 
 <script>
   import { getSongList } from 'api/songlist'
   import Avatar from 'components/avatar/avatar'
+  import ListTable from 'components/list-table/list-table'
+  import SongList from 'common/js/songlist'
+  import User from 'common/js/user'
+  // import { countFix } from 'common/js/util'
 
   export default {
     name: 'song-list',
     components: {
-      Avatar
+      Avatar,
+      ListTable
     },
     data () {
       return {
         folding: true,
-        content: '欢迎来到本期的流行音乐实验室，\n' +
-          '       给您呈现一批耳目一新的新作品，\n' +
-          '       在这个情歌至上的年代，\n' +
-          '       还有歌手敢于突破自己，大胆创新，\n' +
-          '       干一些费力不讨好的事情，\n' +
-          '       是一件特别美好的事情，\n' +
-          '       忠于对梦想的热爱，\n' +
-          '       不停止对音乐的探索与开拓，\n' +
-          '       在自己的作品中，\n' +
-          '       融入一些奇思妙想的新鲜元素，\n' +
-          '       总要多尝试才能在歌曲中找到自己想要的风格，\n' +
-          '       呈现出的效果自然也是让人惊喜不断。\n' +
-          '       忠于自己，热爱生活，生命里还有无限可能。'
+        songlist: {} // 歌单信息
       }
     },
     created () {
       getSongList(this.$route.params.id).then(res => {
-        console.log(res)
+        let pl = res.data.playlist
+        this.songlist = new SongList({
+          id: pl.id,
+          name: pl.name,
+          cover: pl.coverImgUrl,
+          creator: new User({
+            id: pl.creator.userId,
+            nickname: pl.creator.nickname,
+            avatar: pl.creator.avatarUrl
+          }),
+          createTime: pl.createTime,
+          subscribedCount: pl.subscribedCount,
+          shareCount: pl.shareCount,
+          tags: pl.tags,
+          trackCount: pl.trackCount,
+          playCount: pl.playCount,
+          description: pl.description
+        })
+        console.log(res.data)
+        console.log(this.songlist)
       })
     },
     methods: {
       toggleFoldIntro () {
         this.folding = !this.folding
       }
+      // countFix
     }
   }
 </script>
@@ -127,7 +154,6 @@
 
     .head
         padding 32px
-        background-color: lightblue
         display flex
         .cover
             flex none
