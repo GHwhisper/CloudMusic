@@ -18,12 +18,28 @@
                     <a-radio-button value="播放全部"><i class="iconfont icon-bofang pre-icon"></i>播放全部</a-radio-button>
                     <a-radio-button value="添加全部到播放列表"><i class="iconfont icon-jia"></i></a-radio-button>
                 </a-radio-group>
-                <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon"></i>收藏(5649)</a-button>
-                <a-button type="round"><i class="iconfont icon-fenxiang pre-icon"></i>分享(5649)</a-button>
-                <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon"></i>下载全部</a-button>
+                <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon round-btn-icon"></i>收藏(5649)</a-button>
+                <a-button type="round"><i class="iconfont icon-fenxiang pre-icon round-btn-icon"></i>分享(5649)</a-button>
+                <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon round-btn-icon"></i>下载全部</a-button>
             </div>
             <div class="info">
-
+                <div class="row-item label">
+                    <span class="title">标签：</span>
+                    <span>
+                        <router-link to="">散步</router-link>/
+                        <router-link to="">浪漫</router-link>/
+                        <router-link to="">放松</router-link>
+                    </span>
+                </div>
+                <div class="row-item played">
+                    <span class="title">歌曲：</span>32
+                    <span class="title">播放：</span>111万
+                </div>
+                <div class="row-item intro" :class="folding ? 'fold' : ''">
+                    <span class="title">简介：</span>
+                    <a-icon class="icon-toggle" :type="folding ? 'caret-up' : 'caret-down'" @click="toggleFoldIntro" />
+                    <p class="intro-content" v-html="content"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -38,13 +54,33 @@
     components: {
       Avatar
     },
+    data () {
+      return {
+        folding: true,
+        content: '欢迎来到本期的流行音乐实验室，\n' +
+          '       给您呈现一批耳目一新的新作品，\n' +
+          '       在这个情歌至上的年代，\n' +
+          '       还有歌手敢于突破自己，大胆创新，\n' +
+          '       干一些费力不讨好的事情，\n' +
+          '       是一件特别美好的事情，\n' +
+          '       忠于对梦想的热爱，\n' +
+          '       不停止对音乐的探索与开拓，\n' +
+          '       在自己的作品中，\n' +
+          '       融入一些奇思妙想的新鲜元素，\n' +
+          '       总要多尝试才能在歌曲中找到自己想要的风格，\n' +
+          '       呈现出的效果自然也是让人惊喜不断。\n' +
+          '       忠于自己，热爱生活，生命里还有无限可能。'
+      }
+    },
     created () {
       getSongList(this.$route.params.id).then(res => {
         console.log(res)
       })
     },
     methods: {
-
+      toggleFoldIntro () {
+        this.folding = !this.folding
+      }
     }
   }
 </script>
@@ -104,7 +140,6 @@
                 height 100%
         .detail
             flex 1
-            background-color: lightcoral
             padding-left 24px
             overflow hidden
             h1
@@ -124,12 +159,40 @@
             .author
                 display flex
                 align-items center
+                margin-top 5px
                 .author-name, .create-date
                     font-size $font-size-small-s
                 & > *:not(:first-child)
                     margin-left 10px
             .operators
+                margin-top 10px
                 .pre-icon
-                    font-size inherit
                     margin-right 5px
+                .round-btn-icon
+                    font-size 20px
+            .info
+                margin-top 12px
+                .row-item
+                    & > *
+                        font-size $font-size-small
+                        line-height 1.8
+                    & > .title
+                        color $color-black-light
+                    &.played .title:not(:first-child)
+                        margin-left 15px
+                    &.intro
+                        padding-right 30px
+                        position relative
+                        & .icon-toggle
+                            position absolute
+                            right 0
+                            top 0
+                            font-size 18px
+                            color $color-gray-light
+                        & p.intro-content
+                            display inline
+                            line-height 2
+                            white-space pre-line
+                        &.fold
+                            line-clamp(1)
 </style>
