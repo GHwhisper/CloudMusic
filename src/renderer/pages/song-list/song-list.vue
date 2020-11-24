@@ -12,29 +12,27 @@
                 <div class="author" v-if="songlist.creator">
                     <avatar :src="songlist.creator.avatar"></avatar>
                     <router-link to="" class="author-name">{{songlist.creator.nickname}}</router-link>
-                    <span class="create-date">{{songlist.createTime}}创建</span>
+                    <span class="create-date">{{dateFix(songlist.createTime)}}创建</span>
                 </div>
                 <div class="operators">
                     <a-radio-group>
                         <a-radio-button value="播放全部"><i class="iconfont icon-bofang pre-icon"></i>播放全部</a-radio-button>
                         <a-radio-button value="添加全部到播放列表"><i class="iconfont icon-jia"></i></a-radio-button>
                     </a-radio-group>
-                    <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon round-btn-icon"></i>收藏({{songlist.subscribedCount}})</a-button>
-                    <a-button type="round"><i class="iconfont icon-fenxiang pre-icon round-btn-icon"></i>分享({{songlist.shareCount}})</a-button>
+                    <a-button type="round"><i class="iconfont icon-tianjiawenjianjia pre-icon round-btn-icon"></i>收藏({{countTenThousandFix(songlist.subscribedCount)}})</a-button>
+                    <a-button type="round"><i class="iconfont icon-fenxiang pre-icon round-btn-icon"></i>分享({{countTenThousandFix(songlist.shareCount)}})</a-button>
                     <a-button type="round"><i class="iconfont icon-xiazaipt pre-icon round-btn-icon"></i>下载全部</a-button>
                 </div>
                 <div class="info">
                     <div class="row-item label">
                         <span class="title">标签：</span>
                         <span>
-                            <router-link to="">散步</router-link>/
-                            <router-link to="">浪漫</router-link>/
-                            <router-link to="">放松</router-link>
+                            <router-link class="link" v-for="item in songlist.tags" :key="item" to="">{{item}}</router-link>
                         </span>
                     </div>
                     <div class="row-item played">
                         <span class="title">歌曲：</span>{{songlist.trackCount}}
-                        <span class="title">播放：</span>{{songlist.playCount}}
+                        <span class="title">播放：</span>{{countTenThousandFix(songlist.playCount)}}
                     </div>
                     <div class="row-item intro" :class="folding ? 'fold' : ''">
                         <span class="title">简介：</span>
@@ -65,7 +63,7 @@
   import ListTable from 'components/list-table/list-table'
   import SongList from 'common/js/songlist'
   import User from 'common/js/user'
-  // import { countFix } from 'common/js/util'
+  import { countTenThousandFix, dateFix } from 'common/js/util'
 
   export default {
     name: 'song-list',
@@ -106,8 +104,9 @@
     methods: {
       toggleFoldIntro () {
         this.folding = !this.folding
-      }
-      // countFix
+      },
+      countTenThousandFix,
+      dateFix
     }
   }
 </script>
@@ -204,18 +203,22 @@
                         line-height 1.8
                     & > .title
                         color $color-black-light
+                    &.label .link:not(:last-child)::after
+                        content "/"
+                        padding 0 5px
+                        color $color-black-light
                     &.played .title:not(:first-child)
                         margin-left 15px
                     &.intro
                         padding-right 30px
                         position relative
-                        & .icon-toggle
+                        .icon-toggle
                             position absolute
                             right 0
                             top 0
                             font-size 18px
                             color $color-gray-light
-                        & p.intro-content
+                        p.intro-content
                             display inline
                             line-height 2
                             white-space pre-line

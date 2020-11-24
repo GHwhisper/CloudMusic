@@ -1,12 +1,12 @@
 <template>
     <div class="volume">
         <i class="iconfont icon-bofang1"></i>
-        <span class="count">{{countFix(count)}}</span>
+        <span class="count">{{countOneHundredThousandFix(count)}}</span>
     </div>
 </template>
 
 <script>
-  import { countFix } from 'common/js/util'
+  import { countOneHundredThousandFix } from 'common/js/util'
   export default {
     name: 'play-volume',
     props: {
@@ -16,7 +16,7 @@
       }
     },
     methods: {
-      countFix
+      countOneHundredThousandFix
     }
   }
 </script>

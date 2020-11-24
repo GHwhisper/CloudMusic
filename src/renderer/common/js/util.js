@@ -1,13 +1,34 @@
-const CARDINAL = 100000
+const OneHundredThousand = 100000
+const TenThousand = 10000
 
-function countFix (num) {
-  if (num < CARDINAL) { // 小于10万直接返回
+// 达到十万格式化，单位：万
+function countOneHundredThousandFix (num) {
+  if (num < OneHundredThousand) {
     return +num
-  } else { // 达到10万格式化，单位：万
-    return Math.floor(num / CARDINAL * 10) + '万'
+  } else {
+    return Math.floor(num / OneHundredThousand * 10) + '万'
   }
 }
 
+// 达到一万格式化，单位：万
+function countTenThousandFix (num) {
+  if (num < TenThousand) {
+    return +num
+  } else {
+    return Math.floor(num / TenThousand) + '万'
+  }
+}
+
+function dateFix (timeStamp) {
+  const date = new Date(timeStamp)
+  const Y = date.getFullYear()
+  const M = (date.getMonth() + 1 < 10) ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+  const D = date.getDate()
+  return `${Y}-${M}-${D}`
+}
+
 export {
-  countFix
+  countOneHundredThousandFix,
+  countTenThousandFix,
+  dateFix
 }
