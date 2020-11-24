@@ -6,7 +6,7 @@
                 <navigation></navigation>
             </template>
             <template #right>
-                <keep-alive>
+                <keep-alive exclude="song-list">
                     <router-view></router-view>
                 </keep-alive>
             </template>

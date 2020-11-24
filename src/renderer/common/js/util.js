@@ -19,7 +19,7 @@ function countTenThousandFix (num) {
   }
 }
 
-function dateFix (timeStamp) {
+function dateFormat (timeStamp) {
   const date = new Date(timeStamp)
   const Y = date.getFullYear()
   const M = (date.getMonth() + 1 < 10) ? `0${date.getMonth() + 1}` : date.getMonth() + 1
@@ -27,8 +27,25 @@ function dateFix (timeStamp) {
   return `${Y}-${M}-${D}`
 }
 
+function musicTimeFormat (ms) {
+  const s = ms / 1000 | 0 // 由毫秒ms计算得到秒s，并向下取整
+  let minute = s / 60 | 0
+  minute = minute >= 10 ? minute : `0${minute}` // 得到分钟数候，格式化为两位数
+  const second = _pad(s % 60) // 除去整数分钟后，剩余多少秒，格式化为两位数
+  return `${minute}:${second}`
+}
+
+function _pad (num, n = 2) {
+  let len = num.toString().length
+  while (len < n) {
+    len++
+  }
+  return num
+}
+
 export {
   countOneHundredThousandFix,
   countTenThousandFix,
-  dateFix
+  dateFormat,
+  musicTimeFormat
 }

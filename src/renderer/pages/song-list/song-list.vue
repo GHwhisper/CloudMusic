@@ -12,7 +12,7 @@
                 <div class="author" v-if="songlist.creator">
                     <avatar :src="songlist.creator.avatar"></avatar>
                     <router-link to="" class="author-name">{{songlist.creator.nickname}}</router-link>
-                    <span class="create-date">{{dateFix(songlist.createTime)}}创建</span>
+                    <span class="create-date">{{dateFormat(songlist.createTime)}}创建</span>
                 </div>
                 <div class="operators">
                     <a-radio-group>
@@ -44,7 +44,7 @@
         </div>
         <a-tabs default-active-key="1">
             <a-tab-pane key="1" tab="歌曲列表">
-                <list-table></list-table>
+                <list-table :list="songlist.tracks"></list-table>
             </a-tab-pane>
             <a-tab-pane key="2" tab="评论">
 
@@ -54,7 +54,6 @@
             </a-tab-pane>
         </a-tabs>
     </div>
-
 </template>
 
 <script>
@@ -63,7 +62,10 @@
   import ListTable from 'components/list-table/list-table'
   import SongList from 'common/js/songlist'
   import User from 'common/js/user'
-  import { countTenThousandFix, dateFix } from 'common/js/util'
+  import { countTenThousandFix, dateFormat } from 'common/js/util'
+  import Song from 'common/js/song'
+  import Singer from 'common/js/singer'
+  import Album from 'common/js/album'
 
   export default {
     name: 'song-list',
@@ -80,23 +82,7 @@
     created () {
       getSongList(this.$route.params.id).then(res => {
         let pl = res.data.playlist
-        this.songlist = new SongList({
-          id: pl.id,
-          name: pl.name,
-          cover: pl.coverImgUrl,
-          creator: new User({
-            id: pl.creator.userId,
-            nickname: pl.creator.nickname,
-            avatar: pl.creator.avatarUrl
-          }),
-          createTime: pl.createTime,
-          subscribedCount: pl.subscribedCount,
-          shareCount: pl.shareCount,
-          tags: pl.tags,
-          trackCount: pl.trackCount,
-          playCount: pl.playCount,
-          description: pl.description
-        })
+        this.songlist = this._createSongListObj(pl)
         console.log(res.data)
         console.log(this.songlist)
       })
@@ -105,8 +91,65 @@
       toggleFoldIntro () {
         this.folding = !this.folding
       },
+      _createSongListObj (obj) {
+        return new SongList({
+          id: obj.id,
+          name: obj.name,
+          cover: obj.coverImgUrl,
+          creator: new User({
+            id: obj.creator.userId,
+            nickname: obj.creator.nickname,
+            avatar: obj.creator.avatarUrl
+          }),
+          createTime: obj.createTime,
+          subscribedCount: obj.subscribedCount,
+          shareCount: obj.shareCount,
+          tags: obj.tags,
+          trackCount: obj.trackCount,
+          playCount: obj.playCount,
+          description: obj.description,
+          tracks: this._getTracks(obj.tracks)
+        })
+      },
+      _getTracks (arr) {
+        let list = []
+        arr.forEach(item => {
+          list.push(this._createSong(item))
+        })
+        return list
+      },
+      _createSong (song) {
+        return new Song({
+          id: song.id,
+          name: song.name,
+          singers: this._getSingers(song.ar),
+          duration: song.dt,
+          album: this._createAlbum(song.al)
+        })
+      },
+      _getSingers (arr) {
+        let list = []
+        arr.forEach(item => {
+          list.push(this._createSinger(item))
+        })
+        return list
+      },
+      _createSinger (singer) {
+        return new Singer({
+          id: singer.id,
+          name: singer.name,
+          alias: singer.alias
+        })
+      },
+      _createAlbum (album) {
+        return new Album({
+          id: album.id,
+          name: album.name,
+          pic: album.picUrl
+        })
+      },
       countTenThousandFix,
-      dateFix
+      dateFormat
     }
   }
 </script>
