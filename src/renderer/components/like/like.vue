@@ -1,5 +1,5 @@
 <template>
-    <i class="iconfont icon-xihuan-kongpt" :style="{fontSize: size}" title="喜欢"></i>
+    <i class="iconfont icon-xihuan-kongpt" :style="{fontSize: size}" title="喜欢" @click="submitLike"></i>
 </template>
 
 <script>
@@ -9,6 +9,15 @@
       size: {
         type: String,
         default: '20px'
+      },
+      musicId: {
+        type: Number,
+        required: true
+      }
+    },
+    methods: {
+      submitLike () {
+        console.log(this.musicId)
       }
     }
   }

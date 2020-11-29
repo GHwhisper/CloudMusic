@@ -8,7 +8,10 @@
                 </div>
             </div>
             <div class="info">
-                <div class="name"><span>房间</span><like class="like"></like></div>
+                <div class="name">
+                    <span>房间</span>
+                    <like class="like" :musicId="111"></like>
+                </div>
                 <div class="singer">刘瑞琪</div>
             </div>
         </div>

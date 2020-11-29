@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <a-tabs default-active-key="1">
+        <a-tabs class="a-tabs" default-active-key="1">
             <a-tab-pane key="1" tab="歌曲列表">
                 <list-table :list="songlist.tracks"></list-table>
             </a-tab-pane>
@@ -193,6 +193,26 @@
         &:focus
             color $color-black-light
             border-color #d9d9d9
+    // 修改a-tabs、a-tab-pane组件样式
+    .a-tabs >>> .ant-tabs-nav
+        color $color-black-light
+        font-size $font-size-medium-l
+        & .ant-tabs-tab-active
+            color $color-black
+            font-weight $font-weight-bold
+        & .ant-tabs-tab:hover
+            color $color-black
+    .a-tabs >>> .ant-tabs-ink-bar
+        background-color $color-background
+        height 4px
+    .a-tabs >>> .ant-tabs-bar
+        border none
+    .a-tabs >>> .ant-tabs-nav-scroll
+        padding 0 32px
+    .a-tabs >>> .ant-tabs-tab
+        padding 0 0 8px 0
+    .a-tabs >>> .ant-tabs-content
+        padding-bottom 40px
 
     .head
         padding 32px

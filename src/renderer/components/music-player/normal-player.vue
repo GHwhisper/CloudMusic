@@ -8,7 +8,7 @@
                             <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
                         </div>
                         <div class="operators">
-                            <div class="item-wrapper"><like class="icon"></like></div>
+                            <div class="item-wrapper"><like class="icon" :musicId="111"></like></div>
                             <div class="item-wrapper"><collect class="icon"></collect></div>
                             <div class="item-wrapper"><download class="icon"></download></div>
                             <div class="item-wrapper"><share class="icon"></share></div>
