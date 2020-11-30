@@ -9,10 +9,12 @@
             </div>
             <div class="info">
                 <div class="name">
-                    <span>房间</span>
+                    <span>{{currentSong.name}}</span>
                     <like class="like" :musicId="111"></like>
                 </div>
-                <div class="singer">刘瑞琪</div>
+                <div class="singer">
+                    <link-group class="link-group" :list="currentSong.singers"></link-group>
+                </div>
             </div>
         </div>
         <div class="center">
@@ -41,6 +43,7 @@
             <div><i class="iconfont icon-caidan"></i></div>
         </div>
         <normal-player></normal-player>
+        <audio :src="currentSongUrl"></audio>
     </div>
 </template>
 
@@ -52,6 +55,8 @@
   import Loudspeaker from 'components/loudspeaker/loudspeaker'
   import Tip from 'components/tip/tip'
   import NormalPlayer from 'components/music-player/normal-player'
+  import { getSongUrl, getLyric, getSongDetail } from 'api/song'
+  import LinkGroup from 'components/link/link-group'
 
   export default {
     name: 'bottom-player',
@@ -60,7 +65,8 @@
       ProgressBar,
       Loudspeaker,
       Tip,
-      NormalPlayer
+      NormalPlayer,
+      LinkGroup
     },
     props: {
 
@@ -78,13 +84,17 @@
       togglePlaying () {
         this.setPlayingState(!this.playing)
       },
-      togglePlayer() {
+      togglePlayer () {
         this.setNormalPlayerVisibility(!this.normalPlayerVisibility)
       },
+      getSongUrl,
+      getLyric,
+      getSongDetail,
       ...mapMutations({
         setPlayMode: 'SET_PLAY_MODE',
         setPlayingState: 'SET_PLAYING_STATE',
-        setNormalPlayerVisibility: 'SET_NORMAL_PLAYER_VISIBILITY'
+        setNormalPlayerVisibility: 'SET_NORMAL_PLAYER_VISIBILITY',
+        setCurrentSongUrl: 'SET_CURRENT_SONG_URL'
       })
     },
     computed: {
@@ -121,12 +131,25 @@
       ...mapGetters([
         'mode',
         'playing',
-        'normalPlayerVisibility'
+        'normalPlayerVisibility',
+        'currentSong',
+        'currentSongUrl'
       ])
     },
     watch: {
       mode () {
         this.bus.$emit('showTip', 'playMode')
+      },
+      currentSong (val) {
+        console.log(val)
+        // this.getSongUrl(val.id).then(res => {
+        //   const songUrl = res.data.data[0].url
+        //   console.log(songUrl)
+        //   this.setCurrentSongUrl(songUrl)
+        // })
+        // this.getSongDetail(val.id).then(res => {
+        //   console.log(res.data)
+        // })
       }
     }
   }
@@ -204,8 +227,9 @@
                         color $color-black-light
                 .singer
                     font-size $font-size-small
-                    cursor pointer
                     single-line()
+                    .link-group >>> a
+                        color $color-font-default
         .center
             flex 1
             padding 12px 0

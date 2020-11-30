@@ -13,13 +13,7 @@
         </span>
         <span slot="name" slot-scope="name" class="name">{{name}}</span>
         <span slot="singers" slot-scope="singers">
-            <role-link v-for="singer in singers"
-                       :key="singer.id"
-                       role="singer"
-                       :id="singer.id"
-                       :name="singer.name"
-                       class="singer"
-            ></role-link>
+            <link-group class="link-group" :list="singers"></link-group>
         </span>
         <span slot="album" slot-scope="album">
             <router-link to="" class="album">{{album.name}}</router-link>
@@ -29,9 +23,10 @@
 </template>
 
 <script>
-  import RoleLink from 'components/link/role-link'
+  import LinkGroup from 'components/link/link-group'
   import { musicTimeFormat } from 'common/js/util'
   import Like from 'components/like/like'
+  import { mapMutations } from 'vuex'
   // import VueDraggableResizable from 'vue-draggable-resizable'
 
   const columns = [{
@@ -64,7 +59,7 @@
   export default {
     name: 'list-table',
     components: {
-      RoleLink,
+      LinkGroup,
       Like
     },
     props: {
@@ -82,15 +77,18 @@
         return {
           on: {
             dblclick: () => {
-              this.playMusic(record.id)
+              this.playMusic(record)
             }
           }
         }
       },
-      playMusic (id) {
-        console.log(id)
+      playMusic (song) {
+        this.setCurrentSong(song)
       },
-      musicTimeFormat
+      musicTimeFormat,
+      ...mapMutations({
+        setCurrentSong: 'SET_CURRENT_SONG'
+      })
     }
   }
 </script>
@@ -108,10 +106,6 @@
         padding-bottom 6px
         border none
 
-    .singer:not(:last-child)::after
-        content "/"
-        padding 0 3px
-        color $color-black-light
     .options
         display flex
         align-items center
@@ -124,7 +118,8 @@
         color $color-black-light
         cursor default
         font-size $font-size-small
-    .singer, .album
+    .link-group >>> a
+    .album
         color $color-gray
         &:hover
             color $color-black-light

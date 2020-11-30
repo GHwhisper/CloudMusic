@@ -22,6 +22,9 @@ const mutations = {
   [types.SET_CURRENT_SONG] (state, song) {
     state.currentSong = song
   },
+  [types.SET_CURRENT_SONG_URL] (state, url) {
+    state.currentSongUrl = url
+  },
   [types.SET_CURRENT_LYRIC] (state, lyric) {
     state.currentLyric = lyric
   }

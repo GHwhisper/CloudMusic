@@ -12,4 +12,6 @@ export const currentIndex = state => state.currentIndex
 
 export const currentSong = state => state.currentSong
 
+export const currentSongUrl = state => state.currentSongUrl
+
 export const currentLyric = state => state.currentLyric

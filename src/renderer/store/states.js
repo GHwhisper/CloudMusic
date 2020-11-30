@@ -8,6 +8,7 @@ const states = {
   playList: [], // 播放列表
   currentIndex: -1, // 当前歌曲下标
   currentSong: {}, // 当前歌曲
+  currentSongUrl: '', // 当前歌曲url
   currentLyric: '' // 当前歌曲歌词
 }
 
