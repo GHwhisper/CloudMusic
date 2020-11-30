@@ -5,7 +5,7 @@
                 <div class="music-info">
                     <div class="cd-wrapper">
                         <div class="cd">
-                            <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
+                            <img :src="currentSong.album.pic" alt="">
                         </div>
                         <div class="operators">
                             <div class="item-wrapper"><like class="icon" :musicId="111"></like></div>
@@ -16,10 +16,10 @@
                     </div>
                     <div class="lyric-wrapper">
                         <div class="title">
-                            <h1 class="name">歌曲名</h1>
+                            <h1 class="name">{{currentSong.name}}</h1>
                             <ul class="info">
-                                <li class="item"><span>专辑：</span><router-link to="">心音</router-link></li>
-                                <li class="item"><span>歌手：</span><router-link to="">上北健</router-link></li>
+                                <li class="item"><span>专辑：</span><router-link to="">{{currentSong.album.name}}</router-link></li>
+                                <li class="item"><span>歌手：</span><link-group :list="currentSong.singers"></link-group></li>
                                 <li class="item"><span>来源：</span><router-link to="">我喜欢的音乐</router-link></li>
                             </ul>
                         </div>
@@ -36,11 +36,11 @@
 
 <script>
   import { mapGetters, mapMutations } from 'vuex'
-  // import singlecover from 'images/singlecover.png'
   import Like from 'components/like/like'
   import Collect from 'components/collect/collect'
   import Download from 'components/download/download'
   import Share from 'components/share/share'
+  import LinkGroup from 'components/link/link-group'
 
   export default {
     name: 'normal-player',
@@ -48,11 +48,12 @@
       Like,
       Collect,
       Download,
-      Share
+      Share,
+      LinkGroup
     },
     data () {
       return {
-        // singlecover
+
       }
     },
     methods: {
@@ -65,7 +66,9 @@
     },
     computed: {
       ...mapGetters([
-        'normalPlayerVisibility'
+        'normalPlayerVisibility',
+        'currentSong',
+        ''
       ])
     }
   }

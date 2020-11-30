@@ -1,19 +1,36 @@
 <template>
-    <div class="progress-bar">
+    <div class="progress-bar" ref="progressBar">
         <div class="bar-inner">
-            <div class="progress"></div>
-            <div class="progress-btn"></div>
+            <div class="progress" ref="progress"></div>
+            <div class="progress-btn" ref="progressBtn"></div>
         </div>
     </div>
 </template>
 
 <script>
+  const progressBtnWidth = 10
+
   export default {
     name: 'progress-bar',
     props: {
       percent: {
         type: Number,
         default: 0
+      }
+    },
+    methods: {
+      _offset (offsetWidth) {
+        this.$refs.progress.style.width = `${offsetWidth}px`
+        this.$refs.progressBtn.style.transform = `translate3d(${offsetWidth}px, -50%, 0)`
+      }
+    },
+    watch: {
+      percent (newPercent) {
+        if (newPercent > 0) {
+          const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth / 2
+          const offsetWidth = newPercent * barWidth
+          this._offset(offsetWidth)
+        }
       }
     }
   }

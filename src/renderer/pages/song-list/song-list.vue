@@ -11,7 +11,7 @@
                 </h1>
                 <div class="author" v-if="songlist.creator">
                     <avatar :src="songlist.creator.avatar"></avatar>
-                    <router-link to="" class="author-name">{{songlist.creator.nickname}}</router-link>
+                    <role-link class="author-name" :id="songlist.creator.id" :name="songlist.creator.nickname"></role-link>
                     <span class="create-date">{{dateFormat(songlist.createTime)}}创建</span>
                 </div>
                 <div class="operators">
@@ -26,9 +26,7 @@
                 <div class="info">
                     <div class="row-item label">
                         <span class="title">标签：</span>
-                        <span>
-                            <router-link class="link" v-for="item in songlist.tags" :key="item" to="">{{item}}</router-link>
-                        </span>
+                        <link-group class="link-group" v-if="songlist.tags" type="tags" :list="songlist.tags"></link-group>
                     </div>
                     <div class="row-item played">
                         <span class="title">歌曲：</span>{{songlist.trackCount}}
@@ -66,12 +64,16 @@
   import Song from 'common/js/song'
   import Singer from 'common/js/singer'
   import Album from 'common/js/album'
+  import LinkGroup from 'components/link/link-group'
+  import RoleLink from 'components/link/role-link'
 
   export default {
     name: 'song-list',
     components: {
       Avatar,
-      ListTable
+      ListTable,
+      LinkGroup,
+      RoleLink
     },
     data () {
       return {
@@ -266,10 +268,8 @@
                         line-height 1.8
                     & > .title
                         color $color-black-light
-                    &.label .link:not(:last-child)::after
-                        content "/"
+                    &.label .link-group >>> a:not(:last-child)::after
                         padding 0 5px
-                        color $color-black-light
                     &.played .title:not(:first-child)
                         margin-left 15px
                     &.intro

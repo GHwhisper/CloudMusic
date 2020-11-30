@@ -2,7 +2,7 @@
     <div class="player">
         <div class="left">
             <div class="img-con">
-                <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2801499355,2429956962&fm=26&gp=0.jpg" alt="">
+                <img :src="currentSong.album.pic" alt="">
                 <div class="spread" @click="togglePlayer">
                     <i class="iconfont" :class="screenIcon"></i>
                 </div>
@@ -10,7 +10,7 @@
             <div class="info">
                 <div class="name">
                     <span>{{currentSong.name}}</span>
-                    <like class="like" :musicId="111"></like>
+                    <like class="like" :musicId="currentSong.id"></like>
                 </div>
                 <div class="singer">
                     <link-group class="link-group" :list="currentSong.singers"></link-group>
@@ -30,9 +30,9 @@
                     <div><i class="iconfont icon-geci"></i></div>
                 </div>
                 <div class="progress">
-                    <span class="time time-l">02: 19</span>
-                    <progress-bar class="progress-bar"></progress-bar>
-                    <span class="time time-r">05: 00</span>
+                    <span class="time time-l">{{musicTimeFormat(currentTime * 1000)}}</span>
+                    <progress-bar class="progress-bar" :percent="musicPercent"></progress-bar>
+                    <span class="time time-r">{{musicTimeFormat(currentSong.duration)}}</span>
                 </div>
             </div>
         </div>
@@ -43,7 +43,9 @@
             <div><i class="iconfont icon-caidan"></i></div>
         </div>
         <normal-player></normal-player>
-        <audio :src="currentSongUrl"></audio>
+        <audio ref="audio" :src="currentSongUrl"
+               @timeupdate="updateTime"
+        ></audio>
     </div>
 </template>
 
@@ -57,6 +59,7 @@
   import NormalPlayer from 'components/music-player/normal-player'
   import { getSongUrl, getLyric, getSongDetail } from 'api/song'
   import LinkGroup from 'components/link/link-group'
+  import { musicTimeFormat } from 'common/js/util'
 
   export default {
     name: 'bottom-player',
@@ -73,7 +76,7 @@
     },
     data () {
       return {
-        showTip: false
+        currentTime: 0 // 当前播放时间
       }
     },
     methods: {
@@ -87,9 +90,13 @@
       togglePlayer () {
         this.setNormalPlayerVisibility(!this.normalPlayerVisibility)
       },
+      updateTime (e) {
+        this.currentTime = e.target.currentTime
+      },
       getSongUrl,
       getLyric,
       getSongDetail,
+      musicTimeFormat,
       ...mapMutations({
         setPlayMode: 'SET_PLAY_MODE',
         setPlayingState: 'SET_PLAYING_STATE',
@@ -128,6 +135,9 @@
       screenIcon () {
         return this.normalPlayerVisibility ? 'icon-shousuo' : 'icon-kuozhan'
       },
+      musicPercent () {
+        return this.currentTime * 1000 / this.currentSong.duration
+      },
       ...mapGetters([
         'mode',
         'playing',
@@ -140,16 +150,22 @@
       mode () {
         this.bus.$emit('showTip', 'playMode')
       },
-      currentSong (val) {
-        console.log(val)
-        // this.getSongUrl(val.id).then(res => {
-        //   const songUrl = res.data.data[0].url
-        //   console.log(songUrl)
-        //   this.setCurrentSongUrl(songUrl)
-        // })
-        // this.getSongDetail(val.id).then(res => {
-        //   console.log(res.data)
-        // })
+      currentSong (song) {
+        console.log(song)
+        this.getSongUrl(song.id).then(res => {
+          const songUrl = res.data.data[0].url
+          console.log(songUrl)
+          this.setCurrentSongUrl(songUrl)
+        })
+        this.getSongDetail(song.id).then(res => {
+          console.log(res.data)
+        })
+      },
+      playing (playingState) {
+        const audio = this.$refs.audio
+        this.$nextTick(() => {
+          playingState ? audio.play() : audio.pause()
+        })
       }
     }
   }
