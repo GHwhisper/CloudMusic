@@ -2,7 +2,7 @@
     <div>
         <div v-if="!daily" class="container" :style="width">
             <div class="cover" :style="coverStyleObj">
-                <img :src="imgUrl" alt="">
+                <img v-lazy="imgUrl" alt="">
                 <play class="play-btn fade"></play>
             </div>
             <span class="name">{{name}}</span>

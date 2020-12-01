@@ -6,7 +6,7 @@
                  @click="handleSliderItemClick(index)"
             >
                 <div :class="mask ? 'mask' : ''">
-                    <img ref="img" :src="item" alt="">
+                    <img ref="img" v-lazy="item" alt="">
                 </div>
             </div>
         </div>

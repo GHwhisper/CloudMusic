@@ -8,6 +8,7 @@ import 'ant-design-vue/dist/antd.css'
 import 'common/styles/base.styl'
 import qs from 'qs'
 import 'common/styles/icon.styl'
+import VueLazyload from 'vue-lazyload'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -16,6 +17,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 Vue.prototype.bus = new Vue()
 
 Vue.use(Antd)
+Vue.use(VueLazyload)
 
 axios.defaults.baseURL = 'http://localhost:3000'
 // 请求拦截器

@@ -44,9 +44,24 @@ function _pad (num, n = 2) {
   return num
 }
 
+function throttle (func, wait = 200) {
+  let timeout
+  return function () {
+    let context = this
+    let args = arguments
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        timeout = null
+        func.apply(context, args)
+      }, wait)
+    }
+  }
+}
+
 export {
   countOneHundredThousandFix,
   countTenThousandFix,
   dateFormat,
-  musicTimeFormat
+  musicTimeFormat,
+  throttle
 }

@@ -2,14 +2,14 @@
     <div class="player">
         <div class="left">
             <div class="img-con">
-                <img :src="currentSong.album.pic" alt="">
+                <img v-lazy="currentSong.album.pic" alt="">
                 <div class="spread" @click="togglePlayer">
                     <i class="iconfont" :class="screenIcon"></i>
                 </div>
             </div>
             <div class="info">
                 <div class="name">
-                    <span>{{currentSong.name}}</span>
+                    <span @click="togglePlayer">{{currentSong.name}}</span>
                     <like class="like" :musicId="currentSong.id"></like>
                 </div>
                 <div class="singer">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="progress">
                     <span class="time time-l">{{musicTimeFormat(currentTime * 1000)}}</span>
-                    <progress-bar class="progress-bar" :percent="musicPercent"></progress-bar>
+                    <progress-bar class="progress-bar" :percent="musicPercent" @percentChange="onProgressBarChange"></progress-bar>
                     <span class="time time-r">{{musicTimeFormat(currentSong.duration)}}</span>
                 </div>
             </div>
@@ -91,7 +91,14 @@
         this.setNormalPlayerVisibility(!this.normalPlayerVisibility)
       },
       updateTime (e) {
-        this.currentTime = e.target.currentTime
+        this.currentTime = e.target.currentTime // 这里获取到的时间的单位是s
+      },
+      onProgressBarChange (percent) {
+        let currentTime = this.currentSong.duration / 1000 * percent // currentSong的duration单位为ms，所以需要先 /1000 转换
+        this.$refs.audio.currentTime = currentTime
+        if (!this.playing) {
+          this.togglePlaying()
+        }
       },
       getSongUrl,
       getLyric,
